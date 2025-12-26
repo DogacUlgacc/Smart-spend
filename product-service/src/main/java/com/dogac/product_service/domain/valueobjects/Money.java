@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import com.dogac.product_service.domain.enums.Currency;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public record Money(BigDecimal amount, Currency currency) {
 
     public Money {

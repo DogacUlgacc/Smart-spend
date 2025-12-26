@@ -1,6 +1,6 @@
 package com.dogac.product_service.domain.entities;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.dogac.product_service.domain.valueobjects.Description;
 import com.dogac.product_service.domain.valueobjects.Money;
@@ -14,8 +14,6 @@ public class Product {
     private Description description;
     private Money price;
     private StockQuantity stockQuantity;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @SuppressWarnings("unused")
     private Product() {
@@ -28,23 +26,37 @@ public class Product {
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+
+    }
+
+    public static Product create(ProductName productName, Description description, Money money,
+            StockQuantity stockQuantity) {
+
+        return new Product(ProductId.generate(),
+                Objects.requireNonNull(productName),
+                Objects.requireNonNull(description),
+                Objects.requireNonNull(money),
+                Objects.requireNonNull(stockQuantity));
+    }
+
+    public static Product rehydrate(ProductId productId, ProductName productName, Description description, Money money,
+            StockQuantity stockQuantity) {
+        return new Product(productId, productName, description, money, stockQuantity);
     }
 
     public void updateName(ProductName newName) {
         this.name = newName;
-        this.updatedAt = LocalDateTime.now();
+
     }
 
     public void updateDescription(Description newDescription) {
         this.description = newDescription;
-        this.updatedAt = LocalDateTime.now();
+
     }
 
     public void updatePrice(Money newPrice) {
         this.price = newPrice;
-        this.updatedAt = LocalDateTime.now();
+
     }
 
     public void increaseStock(StockQuantity quantity) {
@@ -52,7 +64,7 @@ public class Product {
             throw new IllegalArgumentException("Stock increase quantity must be positive.");
         }
         this.stockQuantity = new StockQuantity(this.stockQuantity.value() + quantity.value());
-        this.updatedAt = LocalDateTime.now();
+
     }
 
     public void decreaseStock(StockQuantity quantity) {
@@ -60,10 +72,10 @@ public class Product {
             throw new IllegalArgumentException("Stock decrease quantity must be positive.");
         }
         if (this.stockQuantity.value() < quantity.value()) {
-            throw new IllegalStateException("Insufficient stock. Available: " + this.stockQuantity.value() + ", Requested: " + quantity.value());
+            throw new IllegalStateException("Insufficient stock. Available: " + this.stockQuantity.value()
+                    + ", Requested: " + quantity.value());
         }
         this.stockQuantity = new StockQuantity(this.stockQuantity.value() - quantity.value());
-        this.updatedAt = LocalDateTime.now();
     }
 
     public boolean isInStock() {
@@ -95,11 +107,4 @@ public class Product {
         return stockQuantity;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 }

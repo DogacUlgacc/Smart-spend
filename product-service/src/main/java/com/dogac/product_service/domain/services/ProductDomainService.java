@@ -6,8 +6,10 @@ import com.dogac.product_service.domain.exceptions.InsufficientStockException;
 import com.dogac.product_service.domain.exceptions.InvalidPriceChangeException;
 import com.dogac.product_service.domain.exceptions.ProductNotFoundException;
 import com.dogac.product_service.domain.repositories.ProductRepository;
+import com.dogac.product_service.domain.valueobjects.Description;
 import com.dogac.product_service.domain.valueobjects.Money;
 import com.dogac.product_service.domain.valueobjects.ProductId;
+import com.dogac.product_service.domain.valueobjects.ProductName;
 import com.dogac.product_service.domain.valueobjects.StockQuantity;
 
 public class ProductDomainService {
@@ -15,6 +17,13 @@ public class ProductDomainService {
 
     public ProductDomainService(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public Product createProduct(ProductName name, Description description, Money money,
+            StockQuantity stockQuantity) {
+        Product product = Product.create(name, description, money, stockQuantity);
+        validateProductCreation(product);
+        return product;
     }
 
     public void validateProductCreation(Product product) {
@@ -48,7 +57,7 @@ public class ProductDomainService {
     }
 
     public void validatePriceChange(ProductId productId, Money newPrice) {
-        Product product = productRepository.findById(productId)
+        productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId.value()));
 
         if (newPrice.amount().intValue() <= 0) {

@@ -6,6 +6,15 @@ spring:
       uri: http://localhost:8888
   config:
     import: configserver:http://localhost:8787
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5436/product_db
+    username: product_db
+    password: product-password
+    driver-class-name: org.postgresql.Driver
 server:
   port: 8081
 eureka:
