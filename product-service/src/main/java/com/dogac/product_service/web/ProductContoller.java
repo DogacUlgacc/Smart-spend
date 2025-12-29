@@ -1,6 +1,7 @@
 package com.dogac.product_service.web;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import com.dogac.product_service.application.commands.CreateProductCommand;
 import com.dogac.product_service.application.dto.CreatedProductResponse;
 import com.dogac.product_service.application.dto.ProductResponse;
 import com.dogac.product_service.application.queries.GetProductByIdQuery;
+import com.dogac.product_service.application.queries.GetProductListQuery;
 import com.dogac.product_service.application.queryHandlers.GetProductByIdQueryHandler;
+import com.dogac.product_service.application.queryHandlers.GetProductListQueryHandler;
 
 import jakarta.validation.Valid;
 
@@ -26,11 +29,14 @@ public class ProductContoller {
 
     private final CreateProductCommandHandler createProductCommandHandler;
     private final GetProductByIdQueryHandler getProductByIdQueryHandler;
+    private final GetProductListQueryHandler getProductListQueryHandler;
 
     public ProductContoller(CreateProductCommandHandler createProductCommandHandler,
-            GetProductByIdQueryHandler getProductByIdQueryHandler) {
+            GetProductByIdQueryHandler getProductByIdQueryHandler,
+            GetProductListQueryHandler getProductListQueryHandler) {
         this.createProductCommandHandler = createProductCommandHandler;
         this.getProductByIdQueryHandler = getProductByIdQueryHandler;
+        this.getProductListQueryHandler = getProductListQueryHandler;
     }
 
     @PostMapping
@@ -50,6 +56,12 @@ public class ProductContoller {
     public ResponseEntity<ProductResponse> getProductById(@PathVariable UUID id) {
         ProductResponse response = getProductByIdQueryHandler.handle(new GetProductByIdQuery(id));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductResponse>> getProductList() {
+        List<ProductResponse> responseList = getProductListQueryHandler.handle(new GetProductListQuery());
+        return ResponseEntity.ok(responseList);
     }
 
 }
