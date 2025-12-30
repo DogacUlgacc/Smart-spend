@@ -49,6 +49,10 @@ public class Product {
 
     }
 
+    public void updateStockQuantity(StockQuantity newStockQuantity) {
+        this.stockQuantity = newStockQuantity;
+    }
+
     public void updateDescription(Description newDescription) {
         this.description = newDescription;
 

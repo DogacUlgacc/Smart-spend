@@ -64,4 +64,18 @@ public class ProductDomainService {
             throw new InvalidPriceChangeException("New Price cannot be 0");
         }
     }
+
+    public Product updateProduct(ProductId id, ProductName productName, Description productDescription, Money money,
+            StockQuantity stockQuantity) {
+
+        Product p = productRepository.findById(id).orElse(null);
+        if (p == null) {
+            throw new ProductNotFoundException("Product with given id: " + id + " not found!");
+        }
+        p.updateName(productName);
+        p.updateDescription(productDescription);
+        p.updatePrice(money);
+        p.updateStockQuantity(stockQuantity);
+        return p;
+    }
 }

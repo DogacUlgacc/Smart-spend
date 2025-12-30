@@ -14,13 +14,9 @@ import jakarta.validation.constraints.Size;
 
 public record CreateProductCommand(
 
-        @NotBlank @Size(max = 255) String productName,
-        @NotBlank String productDescription,
-
-        @NotNull @DecimalMin("0.0") BigDecimal amount,
-        @NotNull Currency currency,
-
-        @NotNull @Min(0) Integer stockQuantity
-
-) implements Command<CreatedProductResponse> {
+                @NotBlank @Size(max = 255) String productName,
+                @NotBlank String productDescription,
+                @NotNull @DecimalMin("0.0") BigDecimal amount,
+                @NotNull Currency currency,
+                @NotNull @Min(0) Integer stockQuantity) implements Command<CreatedProductResponse> {
 }
