@@ -3,7 +3,6 @@ package com.dogac.product_service.domain.services;
 import com.dogac.product_service.domain.entities.Product;
 import com.dogac.product_service.domain.exceptions.DuplicateProductException;
 import com.dogac.product_service.domain.exceptions.InsufficientStockException;
-import com.dogac.product_service.domain.exceptions.InvalidPriceChangeException;
 import com.dogac.product_service.domain.exceptions.ProductNotFoundException;
 import com.dogac.product_service.domain.repositories.ProductRepository;
 import com.dogac.product_service.domain.valueobjects.Description;
@@ -21,61 +20,47 @@ public class ProductDomainService {
 
     public Product createProduct(ProductName name, Description description, Money money,
             StockQuantity stockQuantity) {
+
         Product product = Product.create(name, description, money, stockQuantity);
-        validateProductCreation(product);
+
         return product;
     }
 
-    public void validateProductCreation(Product product) {
-        if (productRepository.existsByName(product.getName().value())) {
+    public void ensureProductNameIsUnique(String productName) {
+        if (productRepository.existsByName(productName)) {
             throw new DuplicateProductException(
-                    "Product with name '" + product.getName().value() + "' already exists.");
+                    "Product with name '" + productName + "' already exists.");
         }
     }
 
-    public void reserveStock(ProductId productId, StockQuantity quantity) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId.value()));
-
+    public void reserveStock(Product product, StockQuantity quantity) {
         if (!product.hasEnoughStock(quantity.value())) {
             throw new InsufficientStockException(
-                    "Insufficient stock for product: " + product.getName().value() +
-                            ". Available: " + product.getStockQuantity().value() +
-                            ", Requested: " + quantity.value());
+                    "Insufficient stock for product: " + product.getName().value());
         }
-
         product.decreaseStock(quantity);
-        productRepository.save(product);
     }
 
-    public void releaseStock(ProductId productId, StockQuantity quantity) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId.value()));
-
+    public void releaseStock(Product product, StockQuantity quantity) {
         product.increaseStock(quantity);
-        productRepository.save(product);
-    }
-
-    public void validatePriceChange(ProductId productId, Money newPrice) {
-        productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId.value()));
-
-        if (newPrice.amount().intValue() <= 0) {
-            throw new InvalidPriceChangeException("New Price cannot be 0");
-        }
     }
 
     public Product updateProduct(ProductId id, ProductName productName, Description productDescription, Money money,
             StockQuantity stockQuantity) {
 
-        Product p = productRepository.findById(id).orElse(null);
-        if (p == null) {
-            throw new ProductNotFoundException("Product with given id: " + id + " not found!");
-        }
+        Product p = getProduct(id);
         p.updateName(productName);
         p.updateDescription(productDescription);
         p.updatePrice(money);
         p.updateStockQuantity(stockQuantity);
+        return p;
+    }
+
+    public Product getProduct(ProductId id) {
+        Product p = productRepository.findById(id).orElse(null);
+        if (p == null) {
+            throw new ProductNotFoundException("Product with given id: " + id + " not found!");
+        }
         return p;
     }
 }

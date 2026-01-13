@@ -1,24 +1,22 @@
 package com.dogac.product_service.domain.entities;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
+import com.dogac.product_service.domain.core.AggregateRoot;
+import com.dogac.product_service.domain.exceptions.InvalidPriceChangeException;
 import com.dogac.product_service.domain.valueobjects.Description;
 import com.dogac.product_service.domain.valueobjects.Money;
 import com.dogac.product_service.domain.valueobjects.ProductId;
 import com.dogac.product_service.domain.valueobjects.ProductName;
 import com.dogac.product_service.domain.valueobjects.StockQuantity;
 
-public class Product {
-    private ProductId id;
+public class Product implements AggregateRoot<ProductId> {
+    private final ProductId id;
     private ProductName name;
     private Description description;
     private Money price;
     private StockQuantity stockQuantity;
-
-    @SuppressWarnings("unused")
-    private Product() {
-        // Private constructor for JPA/Hibernate or object mapping frameworks
-    }
 
     public Product(ProductId id, ProductName name, Description description, Money price, StockQuantity stockQuantity) {
         this.id = id;
@@ -59,6 +57,9 @@ public class Product {
     }
 
     public void updatePrice(Money newPrice) {
+        if (newPrice.amount().compareTo(BigDecimal.ZERO) < 0) {
+            throw new InvalidPriceChangeException("New price should be a positive.");
+        }
         this.price = newPrice;
 
     }

@@ -7,6 +7,7 @@ import com.dogac.product_service.application.dto.ProductResponse;
 import com.dogac.product_service.application.mapper.GetProductMapper;
 import com.dogac.product_service.application.queries.GetProductByIdQuery;
 import com.dogac.product_service.domain.entities.Product;
+import com.dogac.product_service.domain.exceptions.ProductNotFoundException;
 import com.dogac.product_service.domain.repositories.ProductRepository;
 import com.dogac.product_service.domain.valueobjects.ProductId;
 
@@ -23,7 +24,10 @@ public class GetProductByIdQueryHandler implements QueryHandler<GetProductByIdQu
 
     @Override
     public ProductResponse handle(GetProductByIdQuery query) {
-        Product product = productRepository.findById(new ProductId(query.id())).orElse(null);
+        ProductId productId = ProductId.from(query.id());
+        Product product = productRepository.findById(productId)
+                .orElseThrow(
+                        () -> new ProductNotFoundException("Product with given id: " + productId + " is not found!"));
         return getProductMapper.toResponse(product);
     }
 }

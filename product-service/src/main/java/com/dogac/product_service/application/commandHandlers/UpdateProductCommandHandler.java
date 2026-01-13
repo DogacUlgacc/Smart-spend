@@ -1,6 +1,7 @@
 package com.dogac.product_service.application.commandHandlers;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dogac.product_service.application.commands.UpdateProductCommand;
 import com.dogac.product_service.application.core.CommandHandler;
@@ -15,9 +16,8 @@ import com.dogac.product_service.domain.valueobjects.ProductId;
 import com.dogac.product_service.domain.valueobjects.ProductName;
 import com.dogac.product_service.domain.valueobjects.StockQuantity;
 
-import jakarta.transaction.Transactional;
-
 @Component
+@Transactional
 public class UpdateProductCommandHandler implements CommandHandler<UpdateProductCommand, UpdatedProductResponse> {
 
     private final ProductDomainService productDomainService;
@@ -32,9 +32,10 @@ public class UpdateProductCommandHandler implements CommandHandler<UpdateProduct
     }
 
     @Override
-    @Transactional
+
     public UpdatedProductResponse handle(UpdateProductCommand command) {
-        ProductId productId = new ProductId(command.id());
+        ProductId productId = ProductId.from(command.id());
+        productDomainService.ensureProductNameIsUnique(command.productName());
         Product updatedProduct = productDomainService.updateProduct(productId,
                 new ProductName(command.productName()), new Description(command.productDescription()),
                 new Money(command.amount(), command.currency()),

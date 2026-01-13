@@ -12,4 +12,8 @@ public record ProductId(UUID value) {
     public static ProductId generate() {
         return new ProductId(UUID.randomUUID());
     }
+
+    public static ProductId from(UUID value) {
+        return new ProductId(value);
+    }
 }

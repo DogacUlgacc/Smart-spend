@@ -1,6 +1,7 @@
 package com.dogac.product_service.application.commandHandlers;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dogac.product_service.application.commands.CreateProductCommand;
 import com.dogac.product_service.application.core.CommandHandler;
@@ -15,6 +16,7 @@ import com.dogac.product_service.domain.valueobjects.ProductName;
 import com.dogac.product_service.domain.valueobjects.StockQuantity;
 
 @Component
+@Transactional
 public class CreateProductCommandHandler
         implements CommandHandler<CreateProductCommand, CreatedProductResponse> {
 
@@ -34,13 +36,12 @@ public class CreateProductCommandHandler
 
         Money money = new Money(command.amount(), command.currency());
         StockQuantity stockQuantity = new StockQuantity(command.stockQuantity());
-
+        productDomainService.ensureProductNameIsUnique(command.productName());
         Product product = productDomainService.createProduct(
                 new ProductName(command.productName()),
                 new Description(command.productDescription()),
                 money,
                 stockQuantity);
-
         productRepository.save(product);
         return createProductMapper.toResponse(product);
     }
