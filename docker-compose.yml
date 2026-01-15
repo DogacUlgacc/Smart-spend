@@ -12,5 +12,18 @@ services:
     volumes:
       - productdb_vol:/var/lib/postgresql/data
 
+  userssv_db:
+    container_name: userssv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user_db
+      POSTGRES_PASSWORD: user-password
+    ports:
+      - "5437:5432"
+    volumes:
+      - userdb_vol:/var/lib/postgresql/data
 volumes:
   productdb_vol:
+  userdb_vol:
