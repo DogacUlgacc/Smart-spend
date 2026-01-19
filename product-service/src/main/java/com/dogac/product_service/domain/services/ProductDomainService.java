@@ -21,9 +21,7 @@ public class ProductDomainService {
     public Product createProduct(ProductName name, Description description, Money money,
             StockQuantity stockQuantity) {
 
-        Product product = Product.create(name, description, money, stockQuantity);
-
-        return product;
+        return Product.create(name, description, money, stockQuantity);
     }
 
     public void ensureProductNameIsUnique(String productName) {

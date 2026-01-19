@@ -41,6 +41,17 @@
       "mainClass": "com.dogac.product_service.ProductServiceApplication",
       "projectName": "product-service",
       "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=58640 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=product-service"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-UserServiceApplication<user-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.dogac.user_service.UserServiceApplication",
+      "projectName": "user-service",
+      "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
   ]

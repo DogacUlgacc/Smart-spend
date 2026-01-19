@@ -136,6 +136,11 @@ public class User implements AggregateRoot<UserId> {
         touch();
     }
 
+    public void blockUser() {
+        this.status = UserStatus.BLOCKED;
+        touch();
+    }
+
     public void attachExternalIdentity(ExternalId externalId) {
         if (this.externalId != null) {
             throw new IllegalStateException("External identity already attached");
