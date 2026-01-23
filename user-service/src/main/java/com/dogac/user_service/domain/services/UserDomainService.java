@@ -20,6 +20,11 @@ public class UserDomainService {
         user.changeFullName(newFullName);
     }
 
+    public void changePhoneNumber(User user, PhoneNumber newPhoneNumber) {
+        ensurePhoneNumberIsUnique(newPhoneNumber);
+        user.changePhoneNumber(newPhoneNumber);
+    }
+
     public void ensureEmailIsUnique(Email email) {
         if (userRepository.existsByEmail(email)) {
             throw new DuplicateUserEmailException(
@@ -32,11 +37,6 @@ public class UserDomainService {
             throw new DuplicatePhoneNumberException(
                     "Phone number '" + phoneNumber + "'already existst.");
         }
-    }
-
-    public void changePhoneNumber(User user, PhoneNumber newPhoneNumber) {
-        ensurePhoneNumberIsUnique(newPhoneNumber);
-        user.changePhoneNumber(newPhoneNumber);
     }
 
     public void activateUser(User user) {

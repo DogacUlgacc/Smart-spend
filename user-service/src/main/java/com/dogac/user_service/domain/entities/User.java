@@ -213,4 +213,16 @@ public class User implements AggregateRoot<UserId> {
         return id.hashCode();
     }
 
+    public void changeUserType(UserType userType) {
+        if (userType == null) {
+            throw new IllegalArgumentException("UserType cannot be null");
+        }
+
+        if (this.userType == userType) {
+            return; // değişiklik yok → updatedAt dokunma
+        }
+
+        this.userType = userType;
+        this.updatedAt = Instant.now();
+    }
 }
