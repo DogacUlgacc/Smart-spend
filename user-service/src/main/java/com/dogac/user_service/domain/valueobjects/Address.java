@@ -2,11 +2,13 @@ package com.dogac.user_service.domain.valueobjects;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record Address(
-        String title,
-        String city,
-        String street,
-        String country) {
+        @JsonProperty("title") String title,
+        @JsonProperty("city") String city,
+        @JsonProperty("street") String street,
+        @JsonProperty("country") String country) {
 
     public Address {
         Objects.requireNonNull(title, "Address title cannot be null");

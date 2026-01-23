@@ -46,6 +46,7 @@ public class User implements AggregateRoot<UserId> {
         this.id = Objects.requireNonNull(id);
         this.fullName = Objects.requireNonNull(fullName);
         this.email = Objects.requireNonNull(email);
+        this.phoneNumber = phoneNumber;
         this.userType = Objects.requireNonNull(userType);
         this.status = Objects.requireNonNull(status);
         this.addresses = addresses;
