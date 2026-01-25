@@ -13,8 +13,8 @@ public class UserResponseMapper {
         return new UserResponse(
                 user.getFullName().firstName(),
                 user.getFullName().lastName(),
-                user.getEmail().toString(),
-                user.getPhoneNumber().toString(),
+                user.getEmail().getValue(),
+                user.getPhoneNumber().getValue(),
                 user.getUserType(),
                 user.getAddresses(),
                 user.getCreatedAt(),

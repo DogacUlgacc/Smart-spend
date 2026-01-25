@@ -29,7 +29,7 @@ import com.dogac.user_service.application.queries.GetUserByIdQuery;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final CommandBus commandBus;
     private final QueryBus queryBus;

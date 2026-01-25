@@ -21,4 +21,8 @@ public record PhoneNumber(String value) {
                     "Invalid phone number format. Use E.164 format (e.g. +905551112233)");
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -17,6 +17,14 @@ spring:
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        # - id: cart-service
+        #   uri: lb://CART-SERVICE
+        #   predicates:
+        #     - Path=/api/v1/cart/**
 eureka:
   instance:
     hostname: localhost
