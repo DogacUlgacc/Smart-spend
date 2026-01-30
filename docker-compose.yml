@@ -24,6 +24,21 @@ services:
       - "5437:5432"
     volumes:
       - userdb_vol:/var/lib/postgresql/data
+
+  cartssv_db:
+    container_name: cartssv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: cart_db
+      POSTGRES_USER: cart_db
+      POSTGRES_PASSWORD: cart-password
+    ports:
+      - "5438:5432"
+    volumes:
+      - cartdb_vol:/var/lib/postgresql/data
+
 volumes:
   productdb_vol:
   userdb_vol:
+  cartdb_vol:

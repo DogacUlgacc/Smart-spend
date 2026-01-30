@@ -21,10 +21,10 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/v1/users/**
-        # - id: cart-service
-        #   uri: lb://CART-SERVICE
-        #   predicates:
-        #     - Path=/api/v1/cart/**
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/api/v1/cart/**
 eureka:
   instance:
     hostname: localhost

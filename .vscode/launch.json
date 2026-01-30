@@ -52,6 +52,17 @@
       "mainClass": "com.dogac.user_service.UserServiceApplication",
       "projectName": "user-service",
       "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=53465 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=user-service"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-CartServiceApplication<cart-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.dogac.cart_service.CartServiceApplication",
+      "projectName": "cart-service",
+      "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
   ]
