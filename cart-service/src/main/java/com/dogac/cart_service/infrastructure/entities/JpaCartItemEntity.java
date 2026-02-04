@@ -9,10 +9,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "cart_items", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "cart_id", "product_id" })
+})
 public class JpaCartItemEntity {
 
     @Id
@@ -78,6 +82,13 @@ public class JpaCartItemEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @PrePersist
+    void onCreate() {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 
 }

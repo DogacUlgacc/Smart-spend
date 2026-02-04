@@ -15,4 +15,11 @@ public record Quantity(Integer value) {
         return new Quantity(this.value + other.value);
     }
 
+    public static Quantity of(Integer quantity) {
+        if (quantity == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+        return new Quantity(quantity);
+    }
+
 }

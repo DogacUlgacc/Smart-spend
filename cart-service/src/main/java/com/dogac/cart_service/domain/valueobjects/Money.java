@@ -39,4 +39,10 @@ public record Money(BigDecimal amount, CurrencyType currency) {
             throw new IllegalArgumentException("Currencies must be the same");
         }
     }
+
+    public static Money from(BigDecimal amount, String currency) {
+        return new Money(
+                amount != null ? amount : BigDecimal.ZERO,
+                CurrencyType.valueOf(currency));
+    }
 }

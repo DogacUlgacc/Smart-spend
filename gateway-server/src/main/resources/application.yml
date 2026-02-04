@@ -24,7 +24,7 @@ spring:
         - id: cart-service
           uri: lb://CART-SERVICE
           predicates:
-            - Path=/api/v1/cart/**
+            - Path=/api/v1/carts/**
 eureka:
   instance:
     hostname: localhost

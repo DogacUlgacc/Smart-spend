@@ -1,9 +1,9 @@
 package com.dogac.cart_service.infrastructure.mapper;
 
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ObjectFactory;
-import org.mapstruct.Context;
 
 import com.dogac.cart_service.domain.cart.CartItem;
 import com.dogac.cart_service.domain.cart.CartItemId;
@@ -40,4 +40,3 @@ public interface CartItemMapper {
     @Mapping(target = "price", expression = "java(item.getPrice().amount())")
     JpaCartItemEntity toEntity(CartItem item);
 }
-

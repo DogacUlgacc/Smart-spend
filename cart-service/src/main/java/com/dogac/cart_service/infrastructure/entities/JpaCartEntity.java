@@ -6,13 +6,14 @@ import java.util.UUID;
 
 import com.dogac.cart_service.domain.enums.CurrencyType;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -81,6 +82,16 @@ public class JpaCartEntity {
     }
 
     public void setItems(List<JpaCartItemEntity> items) {
-        this.items = items;
+        this.items.clear();
+        for (JpaCartItemEntity item : items) {
+            addItem(item);
+        }
+    }
+
+    @PrePersist
+    void onCreate() {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
     }
 }
