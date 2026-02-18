@@ -65,7 +65,7 @@ public class User implements AggregateRoot<UserId> {
                 UserId.generate(),
                 Objects.requireNonNull(fullName),
                 Objects.requireNonNull(email),
-                phoneNumber,
+                Objects.requireNonNull(phoneNumber),
                 Objects.requireNonNull(userType),
                 UserStatus.ACTIVE,
                 new ArrayList<>(),
