@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.dogac.cart_service.domain.cart.Cart;
+import com.dogac.cart_service.domain.cart.CartId;
 import com.dogac.cart_service.domain.repositories.CartRepository;
 import com.dogac.cart_service.domain.valueobjects.UserId;
 import com.dogac.cart_service.infrastructure.mapper.CartMapper;
@@ -30,6 +31,11 @@ public class CartRepositoryAdapter implements CartRepository {
     @Override
     public void save(Cart cart) {
         cartRepository.save(cartMapper.toEntity(cart));
+    }
+
+    @Override
+    public Optional<Cart> findById(CartId cartId) {
+        return cartRepository.findById(cartId.value()).map(cartMapper::toDomain);
     }
 
 }
