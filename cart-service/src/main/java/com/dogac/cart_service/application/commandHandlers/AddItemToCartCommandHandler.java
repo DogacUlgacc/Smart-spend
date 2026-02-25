@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import com.dogac.cart_service.application.commands.AddItemToCartCommand;
 import com.dogac.cart_service.application.core.CommandHandler;
 import com.dogac.cart_service.domain.cart.Cart;
-import com.dogac.cart_service.domain.enums.CurrencyType;
 import com.dogac.cart_service.domain.repositories.CartRepository;
 import com.dogac.cart_service.domain.valueobjects.Money;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
@@ -28,7 +27,7 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseGet(() -> Cart.create(
                         userId,
-                        CurrencyType.valueOf(command.currency())));
+                        command.currency()));
 
         Quantity quantity = Quantity.of(command.quantity());
         ProductId productId = new ProductId(command.productId());

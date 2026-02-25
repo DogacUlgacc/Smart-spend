@@ -12,6 +12,6 @@ public interface CreatedCartResponseMapper {
         return new CreatedCartResponse(
                 cart.getId().value(),
                 cart.getUserId().value(),
-                cart.getCurrency().name());
+                cart.getCurrency());
     }
 }

@@ -38,4 +38,9 @@ public class CartRepositoryAdapter implements CartRepository {
         return cartRepository.findById(cartId.value()).map(cartMapper::toDomain);
     }
 
+    @Override
+    public Optional<Cart> findByIdAndUserId(CartId cartId, UserId userId) {
+        return cartRepository.findByIdAndUserId(cartId.value(), userId.value()).map(cartMapper::toDomain);
+    }
+
 }

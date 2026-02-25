@@ -12,6 +12,8 @@ public interface CartRepository {
 
     Optional<Cart> findById(CartId cartId);
 
+    Optional<Cart> findByIdAndUserId(CartId cartId, UserId userId);
+
     void save(Cart cart);
 
 }

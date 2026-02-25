@@ -40,9 +40,9 @@ public record Money(BigDecimal amount, CurrencyType currency) {
         }
     }
 
-    public static Money from(BigDecimal amount, String currency) {
+    public static Money from(BigDecimal amount, CurrencyType currency) {
         return new Money(
                 amount != null ? amount : BigDecimal.ZERO,
-                CurrencyType.valueOf(currency));
+                currency);
     }
 }
