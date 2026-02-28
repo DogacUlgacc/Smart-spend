@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.dogac.cart_service.application.bus.CommandBus;
 import com.dogac.cart_service.application.bus.QueryBus;
 import com.dogac.cart_service.application.commands.AddItemToCartCommand;
 import com.dogac.cart_service.application.commands.CreateCartCommand;
+import com.dogac.cart_service.application.commands.RemoveCartItemCommand;
 import com.dogac.cart_service.application.commands.UpdateCartItemQuantityCommand;
 import com.dogac.cart_service.application.dto.CartResponse;
 import com.dogac.cart_service.application.dto.CreatedCartResponse;
@@ -70,5 +72,14 @@ public class CartController {
                         request.quantity()));
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{cartId}/items/{productId}")
+    public ResponseEntity<Void> deleteItem(
+            @PathVariable UUID cartId,
+            @PathVariable UUID productId) {
+        RemoveCartItemCommand command = new RemoveCartItemCommand(cartId, productId);
+        commandBus.send(command);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -74,7 +74,15 @@ public class Cart implements AggregateRoot<CartId> {
 
     public void removeItem(ProductId productId) {
         Objects.requireNonNull(productId, "ProductId cannot be null");
-        items.removeIf(item -> item.getProductId().equals(productId));
+
+        CartItem item = items.stream()
+                .filter(i -> i.getProductId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Cart item not found for productId=" + productId));
+
+        items.remove(item);
+
+        totalAmount();
     }
 
     public void changeItemQuantity(ProductId productId, Quantity newQuantity) {
