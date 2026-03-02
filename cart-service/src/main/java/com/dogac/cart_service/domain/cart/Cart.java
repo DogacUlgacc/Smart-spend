@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.dogac.cart_service.domain.core.AggregateRoot;
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 import com.dogac.cart_service.domain.valueobjects.Money;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
@@ -17,21 +17,21 @@ public class Cart implements AggregateRoot<CartId> {
 
     private final CartId id;
     private final UserId userId;
-    private final CurrencyType currency;
+    private final Currency currency;
     private final List<CartItem> items;
 
-    private Cart(CartId id, UserId userId, CurrencyType currency, List<CartItem> items) {
+    private Cart(CartId id, UserId userId, Currency currency, List<CartItem> items) {
         this.id = Objects.requireNonNull(id, "Cart id cannot be null");
         this.userId = Objects.requireNonNull(userId, "UserId cannot be null");
         this.currency = Objects.requireNonNull(currency, "Currency cannot be null");
         this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
     }
 
-    public static Cart create(UserId userId, CurrencyType currency) {
+    public static Cart create(UserId userId, Currency currency) {
         return new Cart(CartId.generate(), userId, currency, new ArrayList<>());
     }
 
-    public static Cart rehydrate(CartId id, UserId userId, CurrencyType currency, List<CartItem> items) {
+    public static Cart rehydrate(CartId id, UserId userId, Currency currency, List<CartItem> items) {
         Cart cart = new Cart(id, userId, currency, items);
         cart.validateInvariant();
         return cart;
@@ -46,7 +46,7 @@ public class Cart implements AggregateRoot<CartId> {
         return userId;
     }
 
-    public CurrencyType getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 

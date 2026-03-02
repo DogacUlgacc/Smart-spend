@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import com.dogac.cart_service.domain.cart.Cart;
 import com.dogac.cart_service.domain.cart.CartId;
 import com.dogac.cart_service.domain.cart.CartItem;
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 import com.dogac.cart_service.domain.valueobjects.UserId;
 import com.dogac.cart_service.infrastructure.entities.JpaCartEntity;
 import com.dogac.cart_service.infrastructure.entities.JpaCartItemEntity;
@@ -47,7 +47,7 @@ public interface CartMapper {
         return entity;
     }
 
-    List<CartItem> toCartItemDomains(List<JpaCartItemEntity> entities, @Context CurrencyType currency);
+    List<CartItem> toCartItemDomains(List<JpaCartItemEntity> entities, @Context Currency currency);
 
     List<JpaCartItemEntity> toCartItemEntities(List<CartItem> items);
 }

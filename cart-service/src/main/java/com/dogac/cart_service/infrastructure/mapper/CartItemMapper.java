@@ -7,7 +7,7 @@ import org.mapstruct.ObjectFactory;
 
 import com.dogac.cart_service.domain.cart.CartItem;
 import com.dogac.cart_service.domain.cart.CartItemId;
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 import com.dogac.cart_service.domain.valueobjects.Money;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
@@ -16,7 +16,7 @@ import com.dogac.cart_service.infrastructure.entities.JpaCartItemEntity;
 @Mapper(componentModel = "spring")
 public interface CartItemMapper {
 
-    default CartItem toDomain(JpaCartItemEntity entity, @Context CurrencyType currency) {
+    default CartItem toDomain(JpaCartItemEntity entity, @Context Currency currency) {
         if (entity == null) {
             return null;
         }

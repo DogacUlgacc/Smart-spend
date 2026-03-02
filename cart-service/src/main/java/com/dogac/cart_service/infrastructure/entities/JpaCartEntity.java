@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,7 +29,7 @@ public class JpaCartEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false, length = 10)
-    private CurrencyType currency;
+    private Currency currency;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JpaCartItemEntity> items = new ArrayList<>();
@@ -61,7 +61,7 @@ public class JpaCartEntity {
         return userId;
     }
 
-    public CurrencyType getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
@@ -77,7 +77,7 @@ public class JpaCartEntity {
         this.userId = userId;
     }
 
-    public void setCurrency(CurrencyType currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

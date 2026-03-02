@@ -1,6 +1,6 @@
 package com.dogac.cart_service.domain.enums;
 
-public enum CurrencyType {
+public enum Currency {
 
     TRY("₺"),
     USD("$"),
@@ -8,7 +8,7 @@ public enum CurrencyType {
 
     private final String symbol;
 
-    CurrencyType(String symbol) {
+    Currency(String symbol) {
         this.symbol = symbol;
     }
 

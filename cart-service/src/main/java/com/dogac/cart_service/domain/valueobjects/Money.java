@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 
-public record Money(BigDecimal amount, CurrencyType currency) {
+public record Money(BigDecimal amount, Currency currency) {
 
     public Money {
         Objects.requireNonNull(amount, "Amount cannot be null");
@@ -19,7 +19,7 @@ public record Money(BigDecimal amount, CurrencyType currency) {
         amount = amount.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public static Money zero(CurrencyType currency) {
+    public static Money zero(Currency currency) {
         return new Money(BigDecimal.ZERO, currency);
     }
 
@@ -40,9 +40,26 @@ public record Money(BigDecimal amount, CurrencyType currency) {
         }
     }
 
-    public static Money from(BigDecimal amount, CurrencyType currency) {
+    public static Money from(BigDecimal amount, Currency currency) {
         return new Money(
                 amount != null ? amount : BigDecimal.ZERO,
                 currency);
+    }
+
+    public static Currency toCurrencyEnum(com.dogac.cart_service.application.dto.feignDto.Currency enumCurrency) {
+        if (enumCurrency == null) {
+            return null; // veya default değer
+        }
+
+        switch (enumCurrency) {
+            case USD:
+                return Currency.USD;
+            case EUR:
+                return Currency.EUR;
+            case TRY:
+                return Currency.TRY;
+            default:
+                throw new IllegalArgumentException("Unknown currency: " + enumCurrency);
+        }
     }
 }

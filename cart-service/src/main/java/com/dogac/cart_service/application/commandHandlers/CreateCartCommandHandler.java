@@ -8,7 +8,7 @@ import com.dogac.cart_service.application.core.CommandHandler;
 import com.dogac.cart_service.application.dto.CreatedCartResponse;
 import com.dogac.cart_service.application.mapper.CreatedCartResponseMapper;
 import com.dogac.cart_service.domain.cart.Cart;
-import com.dogac.cart_service.domain.enums.CurrencyType;
+import com.dogac.cart_service.domain.enums.Currency;
 import com.dogac.cart_service.domain.repositories.CartRepository;
 import com.dogac.cart_service.domain.valueobjects.UserId;
 
@@ -28,7 +28,7 @@ public class CreateCartCommandHandler implements CommandHandler<CreateCartComman
     @Transactional
     public CreatedCartResponse handle(CreateCartCommand command) {
         UserId userId = UserId.from(command.userId());
-        CurrencyType currencyType = command.currency();
+        Currency currencyType = command.currency();
 
         Cart cart = Cart.create(userId, currencyType);
         cartRepository.save(cart);
