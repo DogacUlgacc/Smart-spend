@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.dogac.cart_service.application.dto.feignDto.ProductDto;
 
 @FeignClient(name = "product-service", url = "http://localhost:8888/api/v1/products")
-
 public interface ProductClient {
 
     @GetMapping("/{id}")

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.dogac.cart_service.application.commands.AddItemToCartCommand;
 import com.dogac.cart_service.application.core.CommandHandler;
+import com.dogac.cart_service.application.dto.event.CartItemAddedEvent;
 import com.dogac.cart_service.application.dto.feignDto.ProductDto;
 import com.dogac.cart_service.application.exception.NotEnoughStockException;
 import com.dogac.cart_service.application.port.ProductPort;
@@ -14,15 +15,19 @@ import com.dogac.cart_service.domain.valueobjects.Money;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
 import com.dogac.cart_service.domain.valueobjects.UserId;
+import com.dogac.cart_service.infrastructure.KafkaEventPublisher;
 
 @Component
 public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCartCommand, Void> {
     private final CartRepository cartRepository;
     private final ProductPort productPort;
+    private final KafkaEventPublisher kafkaEventPublisher;
 
-    public AddItemToCartCommandHandler(CartRepository cartRepository, ProductPort productPort) {
+    public AddItemToCartCommandHandler(CartRepository cartRepository, ProductPort productPort,
+            KafkaEventPublisher kafkaEventPublisher) {
         this.cartRepository = cartRepository;
         this.productPort = productPort;
+        this.kafkaEventPublisher = kafkaEventPublisher;
     }
 
     @Override
@@ -31,8 +36,10 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
         UserId userId = new UserId(command.userId());
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new CartNotFoundException("No cart found"));
 
+        // Openfeign ile product-service'ten gelen product!
         ProductDto product = productPort.getProductById(command.productId());
-
+        System.out.println("product serviceten gelen productDto: " + product);
+        // Double check for quantity
         if (product.stockQuantity() < command.quantity()) {
             throw new NotEnoughStockException("Stock not enough!");
         }
@@ -43,8 +50,18 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
         Money money = Money.from(product.amount(), Money.toCurrencyEnum(product.currency()));
 
         cart.addItem(productId, quantity, money);
-
         cartRepository.save(cart);
+        System.out.println("save oldu!");
+        // Event publish
+        CartItemAddedEvent event = new CartItemAddedEvent(
+                cart.getId().value(),
+                cart.getUserId().value(),
+                productId.value(),
+                command.quantity(),
+                money.amount(),
+                cart.getCurrency());
+        System.out.println("event: " + event);
+        kafkaEventPublisher.publishCartItemAdded(event);
 
         return null;
     }

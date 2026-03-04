@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a8a76b0-4fa2-472c-9766-a7993db70d76" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commands/CreateCartCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commands/CreateCartCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/dto/CartItemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/dto/CartItemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/domain/repositories/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/domain/repositories/CartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/adapter/CartRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/adapter/CartRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/repositories/SpringDataCartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/repositories/SpringDataCartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/web/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/web/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commandHandlers/AddItemToCartCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commandHandlers/AddItemToCartCommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/feignclient/ProductClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/feignclient/ProductClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,12 +19,12 @@
     &quot;assignee&quot;: &quot;DogacUlgacc&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/DogacUlgacc/Smart-spend.git&quot;,
-    &quot;accountId&quot;: &quot;9b7c928f-81a8-4a18-800e-d87d4d5f2402&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/DogacUlgacc/Smart-spend",
+    "accountId": "9b7c928f-81a8-4a18-800e-d87d4d5f2402"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
