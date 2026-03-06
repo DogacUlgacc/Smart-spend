@@ -9,4 +9,8 @@ public record StockQuantity(Integer value) {
             throw new IllegalArgumentException("Stock quantity cannot be negative.");
         }
     }
+
+    public static StockQuantity from(Integer i) {
+        return new StockQuantity(i);
+    }
 }

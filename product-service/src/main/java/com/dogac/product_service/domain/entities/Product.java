@@ -24,7 +24,6 @@ public class Product implements AggregateRoot<ProductId> {
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
-
     }
 
     public static Product create(ProductName productName, Description description, Money money,
@@ -53,7 +52,6 @@ public class Product implements AggregateRoot<ProductId> {
 
     public void updateDescription(Description newDescription) {
         this.description = newDescription;
-
     }
 
     public void updatePrice(Money newPrice) {
@@ -110,6 +108,12 @@ public class Product implements AggregateRoot<ProductId> {
 
     public StockQuantity getStockQuantity() {
         return stockQuantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+                + ", stockQuantity=" + stockQuantity + "]";
     }
 
 }

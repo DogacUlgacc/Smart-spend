@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a8a76b0-4fa2-472c-9766-a7993db70d76" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commandHandlers/AddItemToCartCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/application/commandHandlers/AddItemToCartCommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/feignclient/ProductClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/feignclient/ProductClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/KafkaEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/dogac/cart_service/infrastructure/KafkaEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/dogac/product_service/domain/valueobjects/StockQuantity.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/dogac/product_service/domain/valueobjects/StockQuantity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,12 +23,12 @@
     &quot;assignee&quot;: &quot;DogacUlgacc&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DogacUlgacc/Smart-spend",
-    "accountId": "9b7c928f-81a8-4a18-800e-d87d4d5f2402"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DogacUlgacc/Smart-spend&quot;,
+    &quot;accountId&quot;: &quot;9b7c928f-81a8-4a18-800e-d87d4d5f2402&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -38,11 +42,13 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dogac/Projects/Smart-spend&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
 }</component>

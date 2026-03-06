@@ -1,4 +1,16 @@
 spring:
+  kafka:
+    bootstrap-servers: localhost:9094
+
+    consumer:
+      group-id: product-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.dogac.product_service.infrastructure.kafka.cart.dto.CartItemAddedEvent
   application:
     name: product-service
   cloud:
