@@ -9,8 +9,8 @@ spring:
 
       properties:
         spring.json.trusted.packages: "*"
-        spring.json.use.type.headers: false
-        spring.json.value.default.type: com.dogac.product_service.infrastructure.kafka.cart.dto.CartItemAddedEvent
+        spring.json.use.type.headers: true
+        spring.json.type.mapping: com.dogac.cart_service.application.dto.event.CartItemAddedEvent:com.dogac.product_service.application.dto.event.CartItemAddedEvent,com.dogac.cart_service.application.dto.event.CartItemRemovedEvent:com.dogac.product_service.application.dto.event.CartItemRemovedEvent
   application:
     name: product-service
   cloud:

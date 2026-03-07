@@ -22,4 +22,11 @@ public record Quantity(Integer value) {
         return new Quantity(quantity);
     }
 
+    public static Integer toInteger(Quantity quantity) {
+        if (quantity == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
+        }
+        return new Integer(quantity.value);
+    }
+
 }
