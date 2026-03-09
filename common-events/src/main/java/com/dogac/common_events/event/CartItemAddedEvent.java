@@ -1,9 +1,9 @@
-package com.dogac.product_service.infrastructure.kafka.cart.dto;
+package com.dogac.common_events.event;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.dogac.product_service.domain.enums.Currency;
+import com.dogac.common_events.enums.Currency;
 
 public record CartItemAddedEvent(
         UUID cartId,
@@ -12,5 +12,5 @@ public record CartItemAddedEvent(
         Integer quantity,
         BigDecimal price,
         Currency currency) {
-
 }
+

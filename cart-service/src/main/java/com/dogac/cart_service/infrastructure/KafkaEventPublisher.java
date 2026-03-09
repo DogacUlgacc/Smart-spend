@@ -3,7 +3,7 @@ package com.dogac.cart_service.infrastructure;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.dogac.cart_service.application.dto.event.CartItemAddedEvent;
+import com.dogac.common_events.event.CartItemAddedEvent;
 
 @Component
 public class KafkaEventPublisher {
@@ -18,3 +18,4 @@ public class KafkaEventPublisher {
         kafkaTemplate.send("cart-item-added", event);
     }
 }
+

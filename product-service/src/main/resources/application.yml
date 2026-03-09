@@ -1,16 +1,13 @@
 spring:
   kafka:
     bootstrap-servers: localhost:9094
-
     consumer:
       group-id: product-service
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.trusted.packages: "com.dogac.common_events.event,com.dogac.common_events.enums"
         spring.json.use.type.headers: true
-        spring.json.type.mapping: com.dogac.cart_service.application.dto.event.CartItemAddedEvent:com.dogac.product_service.application.dto.event.CartItemAddedEvent,com.dogac.cart_service.application.dto.event.CartItemRemovedEvent:com.dogac.product_service.application.dto.event.CartItemRemovedEvent
   application:
     name: product-service
   cloud:

@@ -1,4 +1,4 @@
-package com.dogac.cart_service.application.dto.event;
+package com.dogac.common_events.event;
 
 import java.util.UUID;
 
@@ -7,3 +7,4 @@ public record CartItemRemovedEvent(
         UUID productId,
         Integer quantity) {
 }
+

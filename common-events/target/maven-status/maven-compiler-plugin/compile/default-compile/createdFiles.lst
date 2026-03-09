@@ -1,0 +1,4 @@
+com\dogac\Main.class
+com\dogac\common_events\enums\Currency.class
+com\dogac\common_events\event\CartItemAddedEvent.class
+com\dogac\common_events\event\CartItemRemovedEvent.class

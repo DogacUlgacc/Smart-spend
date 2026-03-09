@@ -4,7 +4,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dogac.product_service.application.dto.event.CartItemRemovedEvent;
+import com.dogac.common_events.event.CartItemRemovedEvent;
 import com.dogac.product_service.domain.entities.Product;
 import com.dogac.product_service.domain.exceptions.ProductNotFoundException;
 import com.dogac.product_service.domain.repositories.ProductRepository;
@@ -33,3 +33,4 @@ public class CartItemRemovedEventListener {
         productRepository.save(product);
     }
 }
+

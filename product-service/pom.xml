@@ -84,7 +84,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+		 <!--Common events-->
+		<dependency>
+			<groupId>com.dogac</groupId>
+			<artifactId>common-events</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

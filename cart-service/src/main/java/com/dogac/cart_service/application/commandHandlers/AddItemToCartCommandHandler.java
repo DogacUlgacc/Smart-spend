@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.dogac.cart_service.application.commands.AddItemToCartCommand;
 import com.dogac.cart_service.application.core.CommandHandler;
-import com.dogac.cart_service.application.dto.event.CartItemAddedEvent;
 import com.dogac.cart_service.application.dto.feignDto.ProductDto;
 import com.dogac.cart_service.application.exception.NotEnoughStockException;
 import com.dogac.cart_service.application.port.ProductPort;
@@ -16,6 +15,8 @@ import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
 import com.dogac.cart_service.domain.valueobjects.UserId;
 import com.dogac.cart_service.infrastructure.KafkaEventPublisher;
+import com.dogac.common_events.enums.Currency;
+import com.dogac.common_events.event.CartItemAddedEvent;
 
 @Component
 public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCartCommand, Void> {
@@ -32,7 +33,7 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
 
     @Override
     public Void handle(AddItemToCartCommand command) {
-
+        System.out.println("AddItemToCartCommand handle()");
         UserId userId = new UserId(command.userId());
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new CartNotFoundException("No cart found"));
 
@@ -59,7 +60,7 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
                 productId.value(),
                 command.quantity(),
                 money.amount(),
-                cart.getCurrency());
+                Currency.valueOf(cart.getCurrency().name()));
         System.out.println("event: " + event);
         kafkaEventPublisher.publishCartItemAdded(event);
 
