@@ -12,6 +12,7 @@ import com.dogac.user_service.domain.enums.UserType;
 import com.dogac.user_service.domain.valueobjects.Email;
 import com.dogac.user_service.domain.valueobjects.FullName;
 import com.dogac.user_service.domain.valueobjects.PhoneNumber;
+import com.dogac.user_service.domain.valueobjects.UserId;
 
 class CreateUserTest {
     @Test
@@ -21,7 +22,7 @@ class CreateUserTest {
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
         UserType userType = UserType.CUSTOMER;
 
-        User user = User.create(fullName, email, phoneNumber, userType);
+        User user = User.create(UserId.generate(), fullName, email, phoneNumber, userType);
         assertNotNull(user.getId());
         assertEquals(fullName, user.getFullName());
         assertEquals(email, user.getEmail());
@@ -37,7 +38,8 @@ class CreateUserTest {
         Email email = Email.of("dogac@gmail.com");
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
         UserType userType = UserType.CUSTOMER;
-        assertThrows(NullPointerException.class, () -> User.create(null, email, phoneNumber, userType));
+        assertThrows(NullPointerException.class,
+                () -> User.create(UserId.generate(), null, email, phoneNumber, userType));
     }
 
     @Test
@@ -45,7 +47,8 @@ class CreateUserTest {
         FullName fullName = new FullName("Dogac", "Dogac");
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
         UserType userType = UserType.CUSTOMER;
-        assertThrows(NullPointerException.class, () -> User.create(fullName, null, phoneNumber, userType));
+        assertThrows(NullPointerException.class,
+                () -> User.create(UserId.generate(), fullName, null, phoneNumber, userType));
     }
 
     @Test
@@ -53,7 +56,8 @@ class CreateUserTest {
         FullName fullName = new FullName("Dogac", "Dogac");
         Email email = Email.of("dogac@gmail.com");
         UserType userType = UserType.CUSTOMER;
-        assertThrows(NullPointerException.class, () -> User.create(fullName, email, null, userType));
+        assertThrows(NullPointerException.class,
+                () -> User.create(UserId.generate(), fullName, email, null, userType));
     }
 
     @Test
@@ -62,7 +66,8 @@ class CreateUserTest {
         Email email = Email.of("dogac@gmail.com");
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
 
-        assertThrows(NullPointerException.class, () -> User.create(fullName, email, phoneNumber, null));
+        assertThrows(NullPointerException.class,
+                () -> User.create(UserId.generate(), fullName, email, phoneNumber, null));
     }
 
     @Test
@@ -72,7 +77,7 @@ class CreateUserTest {
         Email email = Email.of("dogac@gmail.com");
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
         UserType userType = UserType.CUSTOMER;
-        User user = User.create(fullName, email, phoneNumber, userType);
+        User user = User.create(UserId.generate(), fullName, email, phoneNumber, userType);
         assertEquals(UserStatus.ACTIVE, user.getStatus());
         assertTrue(user.getAddresses().isEmpty());
     }
@@ -83,7 +88,7 @@ class CreateUserTest {
         Email email = Email.of("dogac@gmail.com");
         PhoneNumber phoneNumber = new PhoneNumber("+905555555555");
         UserType userType = UserType.CUSTOMER;
-        User user = User.create(fullName, email, phoneNumber, userType);
+        User user = User.create(UserId.generate(), fullName, email, phoneNumber, userType);
         assertEquals(user.getUpdatedAt(), user.getCreatedAt());
     }
 

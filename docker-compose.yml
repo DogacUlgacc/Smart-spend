@@ -1,4 +1,39 @@
 services:
+  postgres:
+    image: postgres:13
+    restart: always
+    container_name: keycloak-postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password_for_database
+    ports:
+      - "5432:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    restart: always
+    container_name: keycloak
+    environment:
+      # Admin credentials for the Keycloak instance
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+      # Database configuration
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password_for_database
+      # Other useful settings
+      KC_HOSTNAME: localhost
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: INFO
+    ports:
+      - "8080:8080"
+    command: ["start-dev"]
+    depends_on:
+      - postgres
   productssv_db:
     container_name: productssv_db
     image: postgres:16
@@ -86,5 +121,6 @@ volumes:
   userdb_vol:
   cartdb_vol:
   kafka-data:
+  postgres_data:
 networks:
   kafkanet:

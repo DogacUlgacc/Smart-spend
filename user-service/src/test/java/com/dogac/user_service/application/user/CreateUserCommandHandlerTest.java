@@ -22,6 +22,7 @@ import com.dogac.user_service.application.commandHandlers.CreateUserCommandHandl
 import com.dogac.user_service.application.commands.CreateUserCommand;
 import com.dogac.user_service.application.dto.CreatedUserResponse;
 import com.dogac.user_service.application.mapper.CreateUserMapper;
+import com.dogac.user_service.application.security.JwtUserIdProvider;
 import com.dogac.user_service.domain.entities.User;
 import com.dogac.user_service.domain.enums.UserType;
 import com.dogac.user_service.domain.exceptions.DuplicatePhoneNumberException;
@@ -30,6 +31,7 @@ import com.dogac.user_service.domain.repositories.UserRepository;
 import com.dogac.user_service.domain.services.UserDomainService;
 import com.dogac.user_service.domain.valueobjects.Email;
 import com.dogac.user_service.domain.valueobjects.PhoneNumber;
+import com.dogac.user_service.domain.valueobjects.UserId;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserCommandHandlerTest {
@@ -42,6 +44,9 @@ class CreateUserCommandHandlerTest {
 
         @Mock
         private CreateUserMapper createUserMapper;
+
+        @Mock
+        private JwtUserIdProvider jwtUserIdProvider;
 
         @InjectMocks
         private CreateUserCommandHandler createUserCommandHandler;
@@ -60,7 +65,9 @@ class CreateUserCommandHandlerTest {
                 User user = mock(User.class);
                 CreatedUserResponse response = mock(CreatedUserResponse.class);
 
-                when(createUserMapper.toEntity(command)).thenReturn(user);
+                UserId userId = UserId.generate();
+                when(jwtUserIdProvider.currentUserId()).thenReturn(userId);
+                when(createUserMapper.toEntity(command, userId)).thenReturn(user);
                 when(createUserMapper.toResponse(user)).thenReturn(response);
 
                 // when
@@ -89,7 +96,7 @@ class CreateUserCommandHandlerTest {
                 User savedUser = userCaptor.getValue();
                 assertEquals(user, savedUser); // mapper’dan gelen user mı?
 
-                verify(createUserMapper).toEntity(command);
+                verify(createUserMapper).toEntity(command, userId);
                 verify(createUserMapper).toResponse(user);
 
                 assertEquals(response, result);
@@ -107,7 +114,9 @@ class CreateUserCommandHandlerTest {
                                 UserType.CUSTOMER,
                                 List.of());
 
-                when(createUserMapper.toEntity(command)).thenReturn(mock(User.class));
+                UserId userId = UserId.generate();
+                when(jwtUserIdProvider.currentUserId()).thenReturn(userId);
+                when(createUserMapper.toEntity(command, userId)).thenReturn(mock(User.class));
 
                 doThrow(new DuplicateUserEmailException("Email already exists"))
                                 .when(userDomainService)
@@ -129,7 +138,9 @@ class CreateUserCommandHandlerTest {
                                 "+905551234567",
                                 UserType.CUSTOMER,
                                 List.of());
-                when(createUserMapper.toEntity(command)).thenReturn(mock(User.class));
+                UserId userId = UserId.generate();
+                when(jwtUserIdProvider.currentUserId()).thenReturn(userId);
+                when(createUserMapper.toEntity(command, userId)).thenReturn(mock(User.class));
                 doThrow(new DuplicatePhoneNumberException("Phone number already exists"))
                                 .when(userDomainService).ensurePhoneNumberIsUnique(any(PhoneNumber.class));
 

@@ -1,6 +1,5 @@
 package com.dogac.cart_service.application.commandHandlers;
 
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,17 +12,18 @@ import com.dogac.cart_service.domain.exceptions.CartNotFoundException;
 import com.dogac.cart_service.domain.repositories.CartRepository;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
+import com.dogac.cart_service.infrastructure.kafka.KafkaEventPublisher;
 import com.dogac.common_events.event.CartItemRemovedEvent;
 
 @Component
 public class RemoveCartItemCommandHandler implements CommandHandler<RemoveCartItemCommand, Void> {
 
     private final CartRepository cartRepository;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaEventPublisher eventPublisher;
 
-    public RemoveCartItemCommandHandler(CartRepository cartRepository, KafkaTemplate<String, Object> kafkaTemplate) {
+    public RemoveCartItemCommandHandler(CartRepository cartRepository, KafkaEventPublisher eventPublisher) {
         this.cartRepository = cartRepository;
-        this.kafkaTemplate = kafkaTemplate;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RemoveCartItemCommandHandler implements CommandHandler<RemoveCartIt
                 command.cartId(),
                 command.productId(),
                 integerQuantityToReturn);
-        kafkaTemplate.send("cart-item-removed", event);
+        eventPublisher.publishRemoveCartItem(event);
         return null;
 
     }

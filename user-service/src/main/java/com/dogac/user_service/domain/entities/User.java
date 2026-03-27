@@ -54,7 +54,27 @@ public class User implements AggregateRoot<UserId> {
         this.updatedAt = updatedAt;
     }
 
+    // public static User create(
+    // FullName fullName,
+    // Email email,
+    // PhoneNumber phoneNumber,
+    // UserType userType) {
+    // Instant now = Instant.now();
+
+    // return new User(
+    // UserId.generate(),
+    // Objects.requireNonNull(fullName),
+    // Objects.requireNonNull(email),
+    // Objects.requireNonNull(phoneNumber),
+    // Objects.requireNonNull(userType),
+    // UserStatus.ACTIVE,
+    // new ArrayList<>(),
+    // now,
+    // now);
+    // }
+
     public static User create(
+            UserId id,
             FullName fullName,
             Email email,
             PhoneNumber phoneNumber,
@@ -62,7 +82,7 @@ public class User implements AggregateRoot<UserId> {
         Instant now = Instant.now();
 
         return new User(
-                UserId.generate(),
+                id,
                 Objects.requireNonNull(fullName),
                 Objects.requireNonNull(email),
                 Objects.requireNonNull(phoneNumber),

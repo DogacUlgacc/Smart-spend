@@ -8,12 +8,14 @@ import com.dogac.user_service.domain.entities.User;
 import com.dogac.user_service.domain.valueobjects.Email;
 import com.dogac.user_service.domain.valueobjects.FullName;
 import com.dogac.user_service.domain.valueobjects.PhoneNumber;
+import com.dogac.user_service.domain.valueobjects.UserId;
 
 @Component
 public class CreateUserMapper {
 
-    public User toEntity(CreateUserCommand command) {
+    public User toEntity(CreateUserCommand command, UserId userId) {
         User user = User.create(
+                userId,
                 new FullName(command.firstName(), command.lastName()),
                 new Email(command.email()),
                 new PhoneNumber(command.phoneNumber()),

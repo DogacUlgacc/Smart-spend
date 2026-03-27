@@ -14,7 +14,7 @@ import com.dogac.cart_service.domain.valueobjects.Money;
 import com.dogac.cart_service.domain.valueobjects.ProductId;
 import com.dogac.cart_service.domain.valueobjects.Quantity;
 import com.dogac.cart_service.domain.valueobjects.UserId;
-import com.dogac.cart_service.infrastructure.KafkaEventPublisher;
+import com.dogac.cart_service.infrastructure.kafka.KafkaEventPublisher;
 import com.dogac.common_events.enums.Currency;
 import com.dogac.common_events.event.CartItemAddedEvent;
 
@@ -52,7 +52,7 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
 
         cart.addItem(productId, quantity, money);
         cartRepository.save(cart);
-        System.out.println("save oldu!");
+
         // Event publish
         CartItemAddedEvent event = new CartItemAddedEvent(
                 cart.getId().value(),
@@ -61,7 +61,7 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
                 command.quantity(),
                 money.amount(),
                 Currency.valueOf(cart.getCurrency().name()));
-        System.out.println("event: " + event);
+
         kafkaEventPublisher.publishCartItemAdded(event);
 
         return null;

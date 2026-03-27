@@ -16,4 +16,9 @@ public record UserId(UUID value) {
         return new UserId(value);
     }
 
+    public static UserId fromKeycloakSub(String sub) {
+        UUID uuid = UUID.fromString(sub);
+        return new UserId(uuid);
+    }
+
 }
