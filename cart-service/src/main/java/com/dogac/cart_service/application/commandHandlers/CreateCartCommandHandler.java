@@ -1,5 +1,7 @@
 package com.dogac.cart_service.application.commandHandlers;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,11 @@ public class CreateCartCommandHandler implements CommandHandler<CreateCartComman
     public CreatedCartResponse handle(CreateCartCommand command) {
         UserId userId = currentUserService.getUserId();
         Currency currencyType = command.currency();
+
+        Optional<Cart> existingCart = cartRepository.findByUserId(userId);
+        if (existingCart.isPresent()) {
+            return createdCartResponseMapper.toResponse(existingCart.get());
+        }
 
         Cart cart = Cart.create(userId, currencyType);
         cartRepository.save(cart);

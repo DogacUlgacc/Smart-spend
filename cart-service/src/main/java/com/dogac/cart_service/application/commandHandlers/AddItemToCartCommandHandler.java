@@ -7,6 +7,7 @@ import com.dogac.cart_service.application.core.CommandHandler;
 import com.dogac.cart_service.application.dto.feignDto.ProductDto;
 import com.dogac.cart_service.application.exception.NotEnoughStockException;
 import com.dogac.cart_service.application.port.ProductPort;
+import com.dogac.cart_service.application.security.CurrentUserService;
 import com.dogac.cart_service.domain.cart.Cart;
 import com.dogac.cart_service.domain.exceptions.CartNotFoundException;
 import com.dogac.cart_service.domain.repositories.CartRepository;
@@ -23,18 +24,23 @@ public class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
     private final CartRepository cartRepository;
     private final ProductPort productPort;
     private final KafkaEventPublisher kafkaEventPublisher;
+    private final CurrentUserService currentUserService;
 
     public AddItemToCartCommandHandler(CartRepository cartRepository, ProductPort productPort,
-            KafkaEventPublisher kafkaEventPublisher) {
+            KafkaEventPublisher kafkaEventPublisher, CurrentUserService currentUserService) {
         this.cartRepository = cartRepository;
         this.productPort = productPort;
         this.kafkaEventPublisher = kafkaEventPublisher;
+        this.currentUserService = currentUserService;
     }
 
     @Override
     public Void handle(AddItemToCartCommand command) {
         System.out.println("AddItemToCartCommand handle()");
-        UserId userId = new UserId(command.userId());
+
+        UserId userId = currentUserService.getUserId();
+        System.out.println("currentUserService ile gelen userId: " + userId);
+
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new CartNotFoundException("No cart found"));
 
         // Openfeign ile product-service'ten gelen product!
